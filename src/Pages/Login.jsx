@@ -14,10 +14,13 @@ function Login() {
       password: "",
     },
     onSubmit: async () => {
-      await axios.post("http://localhost:5400/api/login", {
+      const res=await axios.post("http://localhost:5400/api/login", {
         email: values.email,
         password: values.password,
       });
+      console.log(res.data,"kkjkj");
+      
+      localStorage.setItem("id",res.data.user._id)
       navigate("/")
       alert("success");
     },

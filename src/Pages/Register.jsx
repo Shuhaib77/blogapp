@@ -2,8 +2,10 @@ import { Button, Input } from "@material-tailwind/react";
 import axios from "axios";
 import { useFormik } from "formik";
 import React from "react";
+import { useNavigate } from "react-router";
 
 function Register() {
+  const navigate=useNavigate()
   const { handleBlur, handleChange, handleSubmit, values, setFieldValue } =
     useFormik({
       initialValues: {
@@ -26,6 +28,7 @@ function Register() {
             },
           });
           alert("sucess");
+          navigate("/login")
         } catch (error) {
           alert("failed..");
         }
