@@ -160,7 +160,7 @@ function Home() {
           </div>
           <div className="w-full h-[3vh] bg-[#133E87]"></div>
         </div>
-        <div className="bg--800 w-[50vh] h-[90vh] bg-[#CBDCEB] text-center ">
+         <div className="bg--800 w-[50vh] h-[90vh] bg-[#CBDCEB] text-center ">
           <div className="w-full h-[30vh] grid   place-content-center ">
             <h1 className="mb-3">PROFAILE</h1>
             {<img src={user.image} alt="" className="h-32 mb-3" />}
