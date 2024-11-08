@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+
 import {
   Menu,
   MenuHandler,
@@ -8,23 +9,16 @@ import {
   Button,
   Carousel,
 } from "@material-tailwind/react";
-import { set } from "mongoose";
 
-function Myfeed() {
-  const [allPosts, setAllposts] = useState([]);
-  const [save, setSave] = useState(false);
- 
- 
+function Saved() {
 
-  
+
   const id = localStorage.getItem("id");
+  
+  const [saveitem, setSaveitm] = useState([]);
 
 
   const [viewSave, setViewsave] = useState([]);
-
-
-  const [saveitem, setSaveitm] = useState([]);
-
   const saveview = async () => {
     const res = await axios.get(`http://localhost:5400/api/posted/save/${id}`);
    
@@ -38,6 +32,7 @@ function Myfeed() {
   useEffect(() => {
     saveview();
   }, []);
+
 
 
 
@@ -57,38 +52,15 @@ function Myfeed() {
     addtosaved();
   }, []);
 
-  console.log(saveitem, "iiiiiiiii");
-
  
 
+  console.log(viewSave, "kjjjjjff");
 
-
-  
-
-  const allpost = async () => {
-    const res = await axios.get("http://localhost:5400/api/posted/all");
-    try {
-      setAllposts(res.data.posts);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    allpost();
-  }, []);
-
-  console.log(allPosts, "kkkff");
- 
-
-  //   const allusers = async () => {
-  //     const res = await axios.get("http://localhost:5400/api/allusers");
-  //     setUsers(res.data.users);
-  //   };
   return (
     <div>
       <div className="w-[90vh] h-[87vh] flex flex-wrap text-center  gap-2 overflow-auto  ">
         <div className=" text-3xl  font-medium sticky top-0  flex justify-around  shadow-md    bg-[#FEFAE0] w-full p-5 ">
-          <h1 className="text-center w-full  ">All posts</h1>
+          <h1 className="text-center w-full  ">Saved Posts</h1>
           {/* <Button
                 className="ml-32"
                 onClick={() => {
@@ -103,31 +75,21 @@ function Myfeed() {
 
         {/* Postview */}
         <div className=" w-full h-full   object-cover    m-5">
-          {allPosts.map((item) => {
+          {viewSave.map((item) => {
             return (
               <div className="p-5">
                 <div className="text-start  w-full border-2 border-b-[#FEFAE0] rounded border-black  flex justify-between items-center p-3 ">
-                  <h1 className="">{item.description}</h1>
-                  
+                  <h1 className="">{item?.postId?.description}</h1>
 
                   <Menu placement="bottom-left">
-                    {
-                      viewSave.some((val)=>val?.postId?._id===item._id) ? <i
-                      class="fa-regular fa-bookmark fa-lg ml-80"
-                      onClick={() => {
-                        addtosaved(item._id);
-                        setSave(false);
-                      }}
-                    ></i>:
-  
-                    <i
-                      class="fa-solid fa-bookmark fa-lg text-end ml-80"
-                      onClick={() => {
-                        addtosaved(item._id);
-                        setSave(true);
-                      }}
-                    ></i>
-                    }
+                    {viewSave.some((val)=>val?.postId?.id===item?.postId?._id) ?<i class="fa-regular fa-bookmark fa-lg ml-80" onClick={()=>{
+                        //   setSave(false)
+                        addtosaved(item?.postId?._id)
+                        }} ></i> : <i class="fa-solid fa-bookmark fa-lg text-end ml-80" onClick={()=>{
+                        //   setSave(true)
+                        addtosaved(item?.postId?._id)
+                        }} ></i>}
+
                     <MenuHandler>
                       <i class="fa-solid fa-ellipsis-vertical fa-sm "></i>
                     </MenuHandler>
@@ -139,20 +101,20 @@ function Myfeed() {
                       >
                         Save
                       </MenuItem>
-                      <MenuItem
-                      // onClick={() => {
-                      //   deletepost(item._id);
-                      // }}
-                      >
-                        Delete
-                      </MenuItem>
+                      {/* <MenuItem
+                            onClick={() => {
+                              deletepost(item._id);
+                            }}
+                          >
+                            Delete
+                          </MenuItem> */}
                     </MenuList>
                   </Menu>
                 </div>
 
                 <div className="h[57vh]">
                   <img
-                    src={item.image}
+                    src={item?.postId?.image}
                     alt=""
                     className=" bg-white  border   object-cover w-full rounded-md"
                   />
@@ -168,4 +130,4 @@ function Myfeed() {
   );
 }
 
-export default Myfeed;
+export default Saved;

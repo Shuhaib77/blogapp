@@ -6,21 +6,21 @@ function History() {
 
     const id=localStorage.getItem("id")
 
-    const deletepost = async (pid) => {
-        const res = await axios.delete(
-          `http://localhost:5400/api/posted/delete/${pid}/${id}`
-        );
-        setDeleted(res.data.deleteditems);
-        postbyuser();
-      };
-      useEffect(() => {
-        deletepost();
-      }, []);
-      console.log(deleted);
+    // const deletepost = async (pid) => {
+    //     const res = await axios.delete(
+    //       `http://localhost:5400/api/posted/delete/${pid}/${id}`
+    //     );
+    //     setDeleted(res.data.deleteditems);
+    //     // postbyuser();
+    //   };
+    //   useEffect(() => {
+    //     deletepost();
+    //   }, []);
+    //   console.log(deleted);
   return (
     <div className='w-full h-full'>
         <div>
-            {
+            {/* {
                 deleted.map((item)=>{
                     return(
                         <div>
@@ -31,7 +31,7 @@ function History() {
                     )
                 })
 
-            }
+            } */}
       
 
         </div>

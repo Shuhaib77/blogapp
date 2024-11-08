@@ -15,6 +15,7 @@ import { useNavigate, useParams } from "react-router";
 import History from "../Components/History";
 import Homeee from "../Components/Homeee";
 import Myfeed from "../Components/Myfeed";
+import Saved from "../Components/Saved";
 
 function Home() {
   // const [click, setClick] = useState(false);
@@ -47,38 +48,65 @@ function Home() {
       icon: <i class="fa-solid fa-address-card fa-lg"></i>,
       url: "myfeed",
     },
+    {
+      name: "Saved",
+      icon: <i class="fa-solid fa-bookmark fa-lg"></i>,
+      url: "saved",
+    },
     { name: "Message", icon: <i class="fa-solid fa-envelope fa-lg"></i> },
     {
       name: "History",
       icon: <i class="fa-solid fa-clock-rotate-left fa-lg"></i>,
       url: "history",
     },
-    {
-      name: "Saved",
-      icon: <i class="fa-solid fa-bookmark fa-lg"></i>,
-      url: "saved",
-    },
+  
   ];
 
-  // const presentUser = async () => {
-  //   const res = await axios.get(`http://localhost:5400/api/posted/all/${id}`);
-  //   setUser(res.data.user);
-  // };
 
-  // useEffect(() => {
-  //   presentUser();
-  // }, []);
+  const data2 = [
+    {
+      name: "Call",
+      icon:<i class="fa-solid fa-phone-volume fa-xl"></i>,
+      url: "home",
+    },
+    // {
+    //   name: "My Feed",
+    //   icon: <i class="fa-solid fa-address-card fa-lg"></i>,
+    //   url: "myfeed",
+    // },
+    // { name: "Message", icon: <i class="fa-solid fa-envelope fa-lg"></i> },
+    // {
+    //   name: "History",
+    //   icon: <i class="fa-solid fa-clock-rotate-left fa-lg"></i>,
+    //   url: "history",
+    // },
+    // {
+    //   name: "Saved",
+    //   icon: <i class="fa-solid fa-bookmark fa-lg"></i>,
+    //   url: "saved",
+    // },
+  ];
+
+
+  const presentUser = async () => {
+    const res = await axios.get(`http://localhost:5400/api/posted/all/${id}`);
+    setUser(res.data.user);
+  };
+
+  useEffect(() => {
+    presentUser();
+  }, []);
 
   // console.log(user);
 
-  const allpost = async () => {
-    const res = await axios.get("http://localhost:5400/api/posted/all");
-    setAllposts(res.data.posts);
-  };
-  useEffect(() => {
-    allpost();
-  }, []);
-  console.log(allPosts, "kkk");
+  // const allpost = async () => {
+  //   const res = await axios.get("http://localhost:5400/api/posted/all");
+  //   setAllposts(res.data.posts);
+  // };
+  // useEffect(() => {
+  //   allpost();
+  // }, []);
+  // console.log(allPosts, "kkk");
 
   const allusers = async () => {
     const res = await axios.get("http://localhost:5400/api/allusers");
@@ -170,7 +198,18 @@ function Home() {
       <div className="w-full h-full flex bg-[#F3F3E0] ">
         <div className=" w-[50vh] h-[90vh]  flex">
           <div className=" w-[12vh]  h-[90vh] bg-[#F3F3E0]  ">
-            <h1>kbjj</h1>
+          {data2.map((item)=>{
+            return(
+              <div className="flex  ml-2 mt-5">
+                <h1>{item.icon}</h1>
+                 
+              </div>
+
+            )
+          
+
+          })}
+            
           </div>
           <div className="bg--700  w-[32vh] h-[90vh]  bg-[#CBDCEB] text-center">
             <h1>Your posts</h1>
@@ -197,7 +236,7 @@ function Home() {
         <div className=" w-[100vh]   shadow-2xl h-[90vh]">
           {/* bar */}
           {/* <div className="w-full h-[30vh] grid place-content-center "> */}
-            {/* <div className="w-[80vh]  object-cover  h-[23vh] border rounded-lg">
+          {/* <div className="w-[80vh]  object-cover  h-[23vh] border rounded-lg">
               <Carousel className="rounded-xl">
                 <img
                   src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2560&q=80"
@@ -217,7 +256,7 @@ function Home() {
               </Carousel>
             </div> */}
 
-            {/* <div className="w-[80vh] bg-banner-bg object-cover  h-[23vh] p-10 border rounded-lg">
+          {/* <div className="w-[80vh] bg-banner-bg object-cover  h-[23vh] p-10 border rounded-lg">
               <h1 className=" ml-20">Explore Wilde Life Photography</h1>
               <h1 className=" ml-28">Wilde Life Photography is a magic</h1>
             </div> */}
@@ -228,6 +267,8 @@ function Home() {
             <Homeee />
           ) : url === "myfeed" ? (
             <Myfeed />
+          ) : url === "saved" ? (
+            <Saved />
           ) : (
             <Menubar />
           )}

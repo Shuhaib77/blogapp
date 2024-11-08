@@ -15,9 +15,19 @@ import axios from "axios";
 
 function Dialoge({ handleOpen, size }) {
   const ids = localStorage.getItem("id");
- 
+  const [myPost, setMypost] = useState([]);
 
-  
+  const postbyuser = async () => {
+    const res = await axios.get(`http://localhost:5400/api/posted/all/${ids}`);
+    try {
+      setMypost(res.data.user.postId);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    postbyuser();
+  }, []);
 
   const { values, handleBlur, handleChange, handleSubmit, setFieldValue } =
     useFormik({
@@ -36,9 +46,9 @@ function Dialoge({ handleOpen, size }) {
             "Content-Type": "multipart/formdata",
           },
         });
-    
+
         alert("success");
-      
+        postbyuser();
       },
     });
 
@@ -50,8 +60,6 @@ function Dialoge({ handleOpen, size }) {
       setFieldValue("image", file);
     }
   };
-
-
 
   return (
     <div>
